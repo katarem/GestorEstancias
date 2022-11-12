@@ -3,6 +3,7 @@ package aed.mysql;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -32,15 +33,16 @@ public class Controller implements Initializable{
     private TableColumn<Estancia, String> hotel, habitacion, id, cliente, fechaEntrada, fechaSalida;
 
     @FXML
-    private TextField clienteField, habitacionField;
+    private TextField clienteField, idField;
 
     @FXML
     private DatePicker fechaINField, fechaOUTField;
 
     @FXML
-    private ChoiceBox<String> selectHotel;
+    private ChoiceBox<String> selectHotel, selecHab;
 
     private Statement stat;
+    private PreparedStatement pstat;
     private Connection conn;
     private ResultSet rs;
 
@@ -70,43 +72,60 @@ public class Controller implements Initializable{
         cliente.setCellValueFactory(new PropertyValueFactory<Estancia, String>("nombre"));
         fechaEntrada.setCellValueFactory(new PropertyValueFactory<Estancia, String>("fechaInicio"));
         fechaSalida.setCellValueFactory(new PropertyValueFactory<Estancia, String>("fechaFin"));
+        
+        //Añadimos listener al selectHotel para que siempre salgan las habitaciones del hotel seleccionado
+        selectHotel.setOnAction(e -> getHabitaciones());
+
+        //Actualizamos la tabla en el arraylist
         update();
+
+        //Bindeamos la tabla al arraylist para que siempre mantengan el mismo valor
         tabla.setItems(lista);
     }
     
     public void add() throws SQLException{
-        int idCount = getIdCount();
+        int idCount;
+        if(idField.getText().isEmpty())
+            idCount = getIdCount();
+        else
+            idCount = Integer.parseInt(idField.getText());
         nombre = clienteField.getText();
         codHotel = selectHotel.getValue().toString();
-        numHabitacion = habitacionField.getText();
-        fechaInicio = fechaINField.getValue().toString();
-        fechaFin = fechaOUTField.getValue().toString();  
+        numHabitacion = selecHab.getValue();
+        fechaInicio = fechaINField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        fechaFin = fechaOUTField.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));  
 
-        rs = stat.executeQuery(
-                String.format("INSERT INTO estancias values (%d,%s,%s,%s,%s,%s)", idCount, nombre, fechaInicio, fechaFin, numHabitacion, codHotel)
-            );
-
-        rs.close();
+        pstat = conn.prepareStatement(
+                "INSERT INTO estancias VALUES ((?),(?),(?),(?),(?),(?))"
+                );
+        pstat.setInt(1, idCount);
+        pstat.setString(2, nombre);
+        pstat.setString(3, fechaInicio);
+        pstat.setString(4, fechaFin);
+        pstat.setString(5, numHabitacion);
+        pstat.setString(6, codHotel);
+        
+        pstat.executeUpdate();
         update();
     }
 
     public void delete() throws SQLException{
-        int idCount = getIdCount();
-        nombre = clienteField.getText();
-        codHotel = selectHotel.getValue().toString();
-        numHabitacion = habitacionField.getText();
-        fechaInicio = fechaINField.getValue().toString();
-        fechaFin = fechaOUTField.getValue().toString();  
-
-        rs = stat.executeQuery(
-                String.format("DELETE FROM estancias WHERE id=%d", idCount)
+        int idCount = Integer.parseInt(idField.getText());
+        pstat = conn.prepareStatement(
+                "DELETE FROM estancias WHERE id=?"
             );
-
-        rs.close();
+        pstat.setInt(1, idCount);
+        pstat.executeUpdate();
         update();
     }
 
     private void update(){
+        selectHotel.setValue(null);
+        clienteField.setText("");
+        idField.setText("");
+        selecHab.setValue(null);
+        fechaINField.setValue(null);
+        fechaOUTField.setValue(null);
         lista.clear();
         try {
             //Me creo la conexión con la base de datos
@@ -114,13 +133,13 @@ public class Controller implements Initializable{
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/central_reservas","root","");
             stat = conn.createStatement();
             rs = stat.executeQuery(
-                "SELECT * FROM estancias"
+                "SELECT * FROM estancias order by codHotel, id"
             );
 
             while (rs.next()) {
-                if(rs.getString("codHotel")!=codHotel)
-                    selectHotel.getItems().add(rs.getString("codHotel"));
-
+                ObservableList<String> items = selectHotel.getItems();
+                if(!items.contains(rs.getString("codHotel")))
+                    selectHotel.getItems().addAll(rs.getString("codHotel"));
                 nombre = rs.getString("nombre");
                 idCliente = rs.getString("id");
                 codHotel = rs.getString("codHotel");
@@ -134,8 +153,32 @@ public class Controller implements Initializable{
         }
     }
 
+    private void getHabitaciones(){
+        String hotelSeleccionado = selectHotel.getValue().toLowerCase();
+        try {
+            rs = stat.executeQuery(
+                String.format("SELECT numHabitacion FROM habitaciones WHERE codHotel='%s'",hotelSeleccionado));
+                while (rs.next()) {
+                    selectHotel.getItems().addAll(rs.getString("numHabitacion"));
+                    System.out.println(rs.getString("numHabitacion"));
+                }
+                rs.close();
+        
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        
+}
+
     private int getIdCount() {
-        return Integer.parseInt(lista.get(lista.size()-1).getId()) + 1;
+        int cont = 0;
+        for (Estancia estancia : lista) {
+            if(Integer.parseInt(estancia.getId())>cont)
+                cont=Integer.parseInt(estancia.getId());
+        }
+
+        return cont + 1;
     }
 
     public GridPane getView(){

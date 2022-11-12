@@ -21,7 +21,10 @@ public class pruebaSQL {
                 String numHabitacion = rs.getString("numHabitacion");
 
                 System.out.printf("Cliente %s:\t%s ocupó la habitación %s del hotel %s de %s a %s\n",id,cliente,numHabitacion,codHotel,fechaInit,fechaFin);
+            
             }
+
+            System.out.println("'entre comillas'");
 
             rs.close();
             stat.close();
