@@ -15,79 +15,85 @@
 
 <GridPane fx:id="view" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="751.0" vgap="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="0.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" percentWidth="20.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="80.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ChoiceBox fx:id="selectHotel" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Hotel" GridPane.rowIndex="1">
+      <ChoiceBox fx:id="selectHotel" prefWidth="150.0" GridPane.columnIndex="2" />
+      <Label text="Hotel">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowSpan="2147483647">
+      <TableView fx:id="tabla" GridPane.columnIndex="3" GridPane.rowSpan="2147483647">
         <columns>
-            <TableColumn fx:id="hotel" minWidth="-Infinity" prefWidth="75.0" text="Hotel" />
-            <TableColumn fx:id="habitacion" minWidth="-Infinity" prefWidth="75.0" text="Habitación" />
-          <TableColumn fx:id="id" minWidth="-Infinity" prefWidth="75.0" text="id" />
-          <TableColumn fx:id="cliente" minWidth="-Infinity" prefWidth="75.0" text="Cliente" />
-            <TableColumn fx:id="fechaEntrada" minWidth="-Infinity" prefWidth="85.0" text="Fecha Entrada" />
-            <TableColumn fx:id="fechaSalida" minWidth="-Infinity" prefWidth="75.0" text="Fecha Salida" />
+            <TableColumn fx:id="hotel" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Hotel" />
+            <TableColumn fx:id="habitacion" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Habitación" />
+          <TableColumn fx:id="id" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="cliente" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Cliente" />
+            <TableColumn fx:id="fechaEntrada" maxWidth="500.0" minWidth="85.0" prefWidth="106.39990234375" text="Fecha Entrada" />
+            <TableColumn fx:id="fechaSalida" minWidth="-Infinity" prefWidth="102.400146484375" text="Fecha Salida" />
         </columns>
       </TableView>
-      <Label text="Cliente" GridPane.rowIndex="2">
+      <Label text="Cliente" GridPane.rowIndex="1">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label text="Habitación" GridPane.rowIndex="4">
+      <Label text="Habitación" GridPane.rowIndex="3">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label text="Fecha Entrada" GridPane.rowIndex="5">
+      <Label text="Fecha Entrada" GridPane.rowIndex="4">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label text="Fecha Salida" GridPane.rowIndex="7">
+      <Label text="Fecha Salida" GridPane.rowIndex="5">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="clienteField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <DatePicker fx:id="fechaINField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <DatePicker fx:id="fechaOUTField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#add" prefHeight="35.0" prefWidth="100.0" text="AÑADIR" GridPane.rowIndex="8">
+      <TextField fx:id="clienteField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <DatePicker fx:id="fechaINField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <DatePicker fx:id="fechaOUTField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#add" prefHeight="35.0" prefWidth="100.0" text="AÑADIR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#delete" prefHeight="35.0" prefWidth="100.0" text="QUITAR" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#delete" prefHeight="35.0" prefWidth="100.0" text="QUITAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label text="ID" GridPane.rowIndex="3">
+      <Label text="ID" GridPane.rowIndex="2">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <ChoiceBox fx:id="selecHab" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="idField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <ChoiceBox fx:id="selecHab" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#modify" prefHeight="35.0" prefWidth="122.0" text="MODIFICAR" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
    <opaqueInsets>
       <Insets />
